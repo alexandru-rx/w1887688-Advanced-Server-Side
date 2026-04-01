@@ -17,6 +17,16 @@ const cors = require("cors");
 
 const app = express();
 
+app.use(
+  cors({
+    origin: [
+      "http://127.0.0.1:5500",
+      "http://localhost:5500"
+    ],
+    credentials: true
+  })
+);
+
 // Allows server to read and understand data sent from client
 app.use(express.json());
 
@@ -48,16 +58,6 @@ app.get("/protected-test", requireAuth, (req, res) => {
     userId: req.session.userId
   });
 });
-
-app.use(
-  cors({
-    origin: [
-      "http://127.0.0.1:5500",
-      "http://localhost:5500"
-    ],
-    credentials: true
-  })
-);
 
 // Registers all route modules
 app.use("/auth", authRoutes);
