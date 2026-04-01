@@ -17,6 +17,8 @@ const cors = require("cors");
 
 const app = express();
 
+app.set("trust proxy", 1);
+
 app.use(
   cors({
     origin: [
@@ -41,7 +43,9 @@ app.use(
     }),
     cookie: {
       httpOnly: true,
-      maxAge: 1000 * 60 * 60 
+      secure: true,
+      sameSite: "none",
+      maxAge: 1000 * 60 * 60
     }
   })
 );
