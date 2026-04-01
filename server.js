@@ -27,6 +27,14 @@ app.use(
   })
 );
 
+app.options("*", cors({
+  origin: [
+    "http://127.0.0.1:5500",
+    "http://localhost:5500"
+  ],
+  credentials: true
+}));
+
 // Allows server to read and understand data sent from client
 app.use(express.json());
 
