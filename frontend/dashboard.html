@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Dashboard</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <h1>Alumni Influencers Dashboard</h1>
+
+  <nav>
+    <a href="dashboard.html">Home</a>
+    <a href="profile.html">My Profile</a>
+    <a href="register.html">Register</a>
+    <a href="login.html">Logout</a>
+  </nav>
+
+  <hr>
+
+  <section>
+    <h2>Alumni of the Day</h2>
+    <div id="featuredBox">
+      <p id="featuredName">Loading...</p>
+      <p id="featuredBio"></p>
+      <p id="featuredLinkedIn"></p>
+    </div>
+  </section>
+
+  <hr>
+
+  <section>
+    <h2>Tomorrow's Featured</h2>
+    <p id="tomorrowPreview">Loading...</p>
+  </section>
+
+  <hr>
+
+  <section>
+    <h2>Place Your Bid</h2>
+    <form id="bidForm">
+      <input type="number" id="amount" placeholder="Enter bid amount" required min="1">
+      <button type="submit">Submit Bid</button>
+    </form>
+    <button id="updateBidBtn" type="button">Update Existing Bid</button>
+  </section>
+
+  <hr>
+
+  <section>
+    <h2>My Bid Details</h2>
+    <p id="myBid">No bid loaded</p>
+    <p id="bidStatus">No status loaded</p>
+  </section>
+
+<script src="app.js"></script>
+<script>
+
+  // Load today's featured alumnus from API and display it
+  async function loadFeaturedAlumnus() {
+    try {
+      const res = await fetch(API + "/participatingAlumnus/today");
+      const data = await res.json();
+
+      if (!res.ok) {
+        document.getElementById("featuredName").innerText = data.message || "No featured alumnus today";
+        return;
+      }
+
+      document.getElementById("featuredName").innerText =
+        data.profile.fullName || "Featured alumnus";
+
+      document.getElementById("featuredBio").innerText =
+        data.profile.bio || "";
+
+      document.getElementById("featuredLinkedIn").innerHTML =
+        data.profile.linkedinUrl
+          ? `LinkedIn: <a href="${data.profile.linkedinUrl}" target="_blank">${data.profile.linkedinUrl}</a>`
+          : "";
+
+    } catch (err) {
+      document.getElementById("featuredName").innerText = "Unable to load featured alumnus";
+      console.error(err);
+    }
+  }
+
+  // Load tomorrow's participating alumnus if selected
+  async function loadTomorrowPreview() {
+    try {
+      const res = await fetch(API + "/participatingAlumnus/tomorrow");
+      const data = await res.json();
+
+      if (!res.ok) {
+        document.getElementById("tomorrowPreview").innerText =
+          data.message || "No winner selected yet";
+        return;
+      }
+
+      document.getElementById("tomorrowPreview").innerText =
+        data.profile.fullName + " (Selected for tomorrow)";
+    } catch (err) {
+      document.getElementById("tomorrowPreview").innerText =
+        "Could not load preview";
+      console.error(err);
+    }
+  }
+
+  // Load the current user's bid for tomorrow
+  async function loadMyCurrentBid() {
+    try {
+      const res = await fetch(API + "/bids/my-current", {
+        credentials: "include"
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        document.getElementById("myBid").innerText = data.message || "No current bid for tomorrow";
+        return;
+      }
+
+      document.getElementById("myBid").innerText =
+        "My Current Bid: £" + data.bid.amount;
+
+    } catch (err) {
+      document.getElementById("myBid").innerText = "Could not load current bid";
+      console.error(err);
+    }
+  }
+
+  // Load whether the user is currently winning or not
+  async function loadBidStatus() {
+    try {
+      const res = await fetch(API + "/bids/status", {
+        credentials: "include"
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        document.getElementById("bidStatus").innerText =
+          data.message || "Could not load bid status";
+        return;
+      }
+
+      const statusEl = document.getElementById("bidStatus");
+
+      statusEl.innerText = "Bid Status: " + data.status;
+
+      if (data.status === "winning") {
+        statusEl.style.color = "green";
+      } else if (data.status === "not winning") {
+        statusEl.style.color = "red";
+      } else {
+        statusEl.style.color = "black";
+      }
+
+    } catch (err) {
+      document.getElementById("bidStatus").innerText =
+        "Could not load bid status";
+      console.error(err);
+    }
+  }
+
+  // Handle submitting a new bid
+  document.getElementById("bidForm").onsubmit = async (e) => {
+    e.preventDefault();
+
+    const amount = Number(document.getElementById("amount").value);
+
+    const res = await fetch(API + "/bids/place", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      credentials: "include",
+      body: JSON.stringify({ amount })
+    });
+
+    const data = await res.json();
+    alert(data.message || "Bid submitted");
+
+    if (res.ok) {
+      loadMyCurrentBid();
+      loadBidStatus();
+      loadTomorrowPreview();
+    }
+  };
+
+  // Handle updating an existing bid
+  document.getElementById("updateBidBtn").onclick = async () => {
+    const amount = Number(document.getElementById("amount").value);
+
+    if (!amount || amount <= 0) {
+      alert("Enter a valid bid amount first");
+      return;
+    }
+
+    const res = await fetch(API + "/bids/update", {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      credentials: "include",
+      body: JSON.stringify({ amount })
+    });
+
+    const data = await res.json();
+    alert(data.message || "Bid updated");
+
+    if (res.ok) {
+      loadMyCurrentBid();
+      loadBidStatus();
+      loadTomorrowPreview();
+    }
+  };
+
+  // Run functions when page loads
+  loadFeaturedAlumnus();
+  loadTomorrowPreview();
+  loadMyCurrentBid();
+  loadBidStatus();
+
+</script>
+
+</body>
+</html>
