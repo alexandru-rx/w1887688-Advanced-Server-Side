@@ -21,11 +21,7 @@ app.set("trust proxy", 1);
 
 app.use(
   cors({
-    origin: [
-      "http://127.0.0.1:5500",
-      "http://localhost:5500",
-      "https://alexandru-rx.github.io"
-    ],
+    origin: true,
     credentials: true
   })
 );
