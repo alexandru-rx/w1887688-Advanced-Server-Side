@@ -1,0 +1,41 @@
+body {
+  font-family: Arial;
+  text-align: center;
+  margin-top: 50px;
+}
+
+input, button {
+  display: block;
+  margin: 10px auto;
+  padding: 10px;
+  width: 200px;
+}
+
+/* Keeps normal links stacked EXCEPT nav */
+a {
+  display: block;
+  margin: 10px;
+}
+
+/* Makes nav horizontal */
+nav {
+  margin-bottom: 20px;
+}
+
+nav a {
+  display: inline-block;
+  margin: 0 15px;
+  text-decoration: none;
+  color: black;
+  font-weight: bold;
+}
+
+nav a:hover {
+  text-decoration: underline;
+}
+
+/* Sections layout */
+section {
+  margin: 20px auto;
+  width: 60%;
+}
