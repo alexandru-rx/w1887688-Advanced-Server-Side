@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Profile</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <h2>Create Profile</h2>
+
+  <form id="form">
+    <input type="text" id="name" placeholder="Full Name" required>
+    <input type="text" id="bio" placeholder="Bio" required>
+    <input type="text" id="linkedin" placeholder="LinkedIn URL" required>
+    <button type="submit">Save Profile</button>
+  </form>
+
+<script src="app.js"></script>
+<script>
+  document.getElementById("form").onsubmit = async (e) => {
+    e.preventDefault();
+
+    const fullName = document.getElementById("name").value;
+    const bio = document.getElementById("bio").value;
+    const linkedinUrl = document.getElementById("linkedin").value;
+
+    const res = await fetch(API + "/profile", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      credentials: "include",
+      body: JSON.stringify({ fullName, bio, linkedinUrl })
+    });
+
+    const data = await res.json();
+    alert(data.message || "Profile saved");
+  };
+</script>
+
+</body>
+</html>
