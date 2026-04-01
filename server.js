@@ -13,6 +13,7 @@ const apiKeyRoutes = require("./routes/apiKeys");
 const clientRoutes = require("./routes/client");
 const swaggerUi = require("swagger-ui-express");
 const swaggerSpec = require("./swagger");
+const cors = require("cors");
 
 const app = express();
 
@@ -47,6 +48,16 @@ app.get("/protected-test", requireAuth, (req, res) => {
     userId: req.session.userId
   });
 });
+
+app.use(
+  cors({
+    origin: [
+      "http://127.0.0.1:5500",
+      "http://localhost:5500"
+    ],
+    credentials: true
+  })
+);
 
 // Registers all route modules
 app.use("/auth", authRoutes);
