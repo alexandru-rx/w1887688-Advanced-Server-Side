@@ -21,7 +21,18 @@ const router = express.Router();
 
 router.post("/", requireAuth, async (req, res) => {
   try {
-    const { fullName, bio, linkedinUrl, profileImageUrl } = req.body;
+    const {
+  fullName,
+  bio,
+  linkedinUrl,
+  profileImageUrl,
+  programme,
+  graduationYear,
+  industrySector,
+  currentRole,
+  skills,
+  certifications
+} = req.body;
 
     // Basic validation for required fields
     if (!fullName) {
@@ -30,12 +41,28 @@ router.post("/", requireAuth, async (req, res) => {
 
     // Prepares profile data 
     const updateData = {
-      fullName,
-      bio: bio || "",
-      linkedinUrl: linkedinUrl || "",
-      profileImageUrl: profileImageUrl || "",
-      updatedAt: new Date()
-    };
+  fullName,
+  bio: bio || "",
+  linkedinUrl: linkedinUrl || "",
+  profileImageUrl: profileImageUrl || "",
+  programme: programme || "",
+  graduationYear: graduationYear ? Number(graduationYear) : null,
+  industrySector: industrySector || "",
+  currentRole: currentRole || "",
+  skills: Array.isArray(skills)
+    ? skills
+    : String(skills || "")
+        .split(",")
+        .map(item => item.trim())
+        .filter(Boolean),
+  certifications: Array.isArray(certifications)
+    ? certifications
+    : String(certifications || "")
+        .split(",")
+        .map(item => item.trim())
+        .filter(Boolean),
+  updatedAt: new Date()
+};
 
     // Update existing profile/ Create new profile 
     const profile = await Profile.findOneAndUpdate(
