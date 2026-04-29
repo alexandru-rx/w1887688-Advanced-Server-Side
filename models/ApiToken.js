@@ -12,6 +12,10 @@ const ApiTokenSchema = new mongoose.Schema({
     required: true,
     unique: true
   },
+    permissions: {
+    type: [String],
+    default: []
+  },
   isRevoked: {
     type: Boolean,
     default: false
