@@ -4,7 +4,7 @@
 
 Phantasmagoria is a university alumni analytics platform designed to collect, manage, and analyse graduate data. It allows users to register, create profiles, and visualise insights such as industry distribution, programme trends, and skill demand through an interactive dashboard.
 
-The system also supports API key generation and usage tracking, allowing external clients to securely access selected data endpoints.
+The system also supports API key generation and usage tracking, allowing external clients to securely access selected data endpoints. Furthermore the system allows the user to download profile data through the CSV export functionality once a profile is completed and submitted.
 
 ## 2. System Architecture
 
@@ -147,7 +147,7 @@ https://w1887688-advanced-server-side.onrender.com
 
 2. Register a new account using the university email address (@westminster.ac.uk).
 
-3. Verify your account via the backend terminal from above/in submission
+3. Verify your account via the backend terminal (go to logs in Render and you'll see a verification link) from above/in submission
 
 3. Log in using your credentials.
 
@@ -198,7 +198,7 @@ if (query.industrySector) {
 - $sort orders the results by their frequency
 - $limit restricts the outputed skills to only the top 8 most inputted skills.
 
-const data = await Profile.aggregate([
+const data = await Profile.aggregate({
       { $match: filter },
       { $unwind: "$skills" },
       { $group: { _id: "$skills", count: { $sum: 1 } } },
