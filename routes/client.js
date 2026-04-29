@@ -33,7 +33,7 @@ const clientRateLimiter = rateLimit({
 router.get(
   "/participatingAlumnus/tomorrow",
   clientRateLimiter,
-  requireApiKey,
+  requireApiKey("read:alumni_of_day"),
   async (req, res) => {
     try {
       const tomorrow = new Date();
