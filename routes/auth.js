@@ -104,10 +104,10 @@ router.post("/register", async (req, res) => {
       expiresAt,
     });
 
-  // Generates verification link for user
-const baseUrl = "https://w1887688-advanced-server-side.onrender.com";
-const verifyLink = `${baseUrl}/auth/verify?token=${rawToken}`;
-console.log("✅ VERIFY EMAIL LINK:", verifyLink);
+    // Generates verification link for user
+    const baseUrl = process.env.BASE_URL || "http://localhost:3000";
+    const verifyLink = `${baseUrl}/auth/verify?token=${rawToken}`;
+    console.log("✅ VERIFY EMAIL LINK:", verifyLink);
 
     return res.json({
       message: "Registered. Please verify your email (check console link).",
