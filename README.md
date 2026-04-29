@@ -149,20 +149,11 @@ https://w1887688-advanced-server-side.onrender.com
 
 3. Log in using your credentials.
 
-4. Navigate to **My Profile** and enter alumni details such as:
-   - Programme
-   - Graduation Year
-   - Industry Sector
-   - Skills
+4. Navigate to **My Profile** and enter alumni details.
 
 5. Save the profile.
 
-6. Navigate to the **Dashboard** to view:
-   - Total alumni statistics
-   - Industry distribution chart
-   - Programme distribution chart
-   - Graduation year trends
-   - Skills analysis
+6. Navigate to the **Dashboard** to view the different statistics:
 
 7. Use the filter controls to refine analytics results.
 
