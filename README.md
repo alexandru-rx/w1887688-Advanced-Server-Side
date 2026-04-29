@@ -2,9 +2,7 @@
 
 ## 1. Project Overview
 
-Phantasmagoria is a university alumni analytics platform designed to collect, manage, and analyse graduate data. It allows users to register, create profiles, and visualise insights such as industry distribution, programme trends, and skill demand through an interactive dashboard.
-
-Moreover, the system also supports API key generation and usage tracking, allowing external clients to securely access selected data endpoints. Furthermore the system allows the user to download profile data through the CSV export functionality once a profile is completed and submitted.
+Phantasmagoria is a university alumni analytics platform designed to collect, manage, and analyse graduate data. It allows users to register, create profiles, and visualise insights such as industry distribution, programme trends, and skill demand through an interactive dashboard. Moreover, the system also supports API key generation and usage tracking, allowing external clients to securely access selected data endpoints. Furthermore the system allows the user to download profile data through the CSV export functionality once a profile is completed and submitted.
 
 ## 2. System Architecture
 
