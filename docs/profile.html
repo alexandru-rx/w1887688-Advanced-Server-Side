@@ -12,28 +12,86 @@
     <input type="text" id="name" placeholder="Full Name" required>
     <input type="text" id="bio" placeholder="Bio" required>
     <input type="text" id="linkedin" placeholder="LinkedIn URL" required>
+    <input type="text" id="programme" placeholder="Programme (e.g. Computer Science)" required>
+    <input type="number" id="graduationYear" placeholder="Graduation Year (e.g. 2024)" required>
+    <input type="text" id="industrySector" placeholder="Industry Sector (e.g. Technology)" required>
+    <input type="text" id="currentRole" placeholder="Current Role">
+    <input type="text" id="skills" placeholder="Skills">
+    <input type="text" id="certifications" placeholder="Certifications">
     <button type="submit">Save Profile</button>
   </form>
 
 <script src="app.js"></script>
 <script>
+
+  async function loadProfile() {
+    try {
+      const res = await fetch(API + "/profile/me", {
+        credentials: "include"
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        return;
+      }
+
+      const profile = data.profile;
+
+      document.getElementById("name").value = profile.fullName || "";
+      document.getElementById("bio").value = profile.bio || "";
+      document.getElementById("linkedin").value = profile.linkedinUrl || "";
+      document.getElementById("programme").value = profile.programme || "";
+      document.getElementById("graduationYear").value = profile.graduationYear || "";
+      document.getElementById("industrySector").value = profile.industrySector || "";
+      document.getElementById("currentRole").value = profile.currentRole || "";
+      document.getElementById("skills").value = (profile.skills || []).join(", ");
+      document.getElementById("certifications").value = (profile.certifications || []).join(", ");
+
+    } catch (error) {
+      console.error("LOAD PROFILE ERROR:", error);
+    }
+  }
+
   document.getElementById("form").onsubmit = async (e) => {
     e.preventDefault();
 
     const fullName = document.getElementById("name").value;
     const bio = document.getElementById("bio").value;
     const linkedinUrl = document.getElementById("linkedin").value;
+    const programme = document.getElementById("programme").value;
+    const graduationYear = document.getElementById("graduationYear").value;
+    const industrySector = document.getElementById("industrySector").value;
+    const currentRole = document.getElementById("currentRole").value;
+    const skills = document.getElementById("skills").value;
+    const certifications = document.getElementById("certifications").value;
 
     const res = await fetch(API + "/profile", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       credentials: "include",
-      body: JSON.stringify({ fullName, bio, linkedinUrl })
+      body: JSON.stringify({
+        fullName,
+        bio,
+        linkedinUrl,
+        programme,
+        graduationYear,
+        industrySector,
+        currentRole,
+        skills,
+        certifications
+      })
     });
 
     const data = await res.json();
     alert(data.message || "Profile saved");
+
+    if (res.ok) {
+      loadProfile();
+    }
   };
+
+  loadProfile();
 </script>
 
 </body>
