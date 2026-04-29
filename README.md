@@ -238,4 +238,4 @@ if (!req.session || !req.session.userId)
 
 ## 10. Summary
 
-This project demonstrates a full-stack web application with clear separation of secure authentication, structured database design, and data-driven analytics visualisation.
+The project I've built using the criteria given demonstrates a full-stack web application with clean seperation of frontend and backend, incorporating a secure authentication system, structured database design and a data-driven analytics dashboard. 
