@@ -12,11 +12,10 @@ async function connectDB() {
 
     // Connects to MongoDB database
     await mongoose.connect(mongoUri);
-    console.log("✅ MongoDB connected");
+    console.log(" MongoDB connected");
 
   } catch (err) {
-    // Stops application if database connection fails
-    console.error("❌ MongoDB connection error:", err.message);
+    console.error(" MongoDB connection error:", err.message);
     process.exit(1);
   }
 }
