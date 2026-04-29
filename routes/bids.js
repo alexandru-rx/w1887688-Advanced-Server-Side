@@ -174,6 +174,7 @@ router.put("/update", requireAuth, async (req, res) => {
 router.get("/status", requireAuth, async (req, res) => {
   try {
 
+    // Creates a consistent date set to midnight
     const tomorrow = new Date();
     tomorrow.setDate(tomorrow.getDate() + 1);
     tomorrow.setHours(0,0,0,0);
