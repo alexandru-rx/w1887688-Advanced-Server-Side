@@ -21,10 +21,14 @@ const router = express.Router();
 
 router.post("/generate", requireAuth, async (req, res) => {
   try {
-    const { name } = req.body;
+    const { name, permissions } = req.body;
 
     if (!name) {
-      return res.status(400).json({ message: "Key name is required" });
+    return res.status(400).json({ message: "Key name is required" });
+    }
+
+    if (permissions && !Array.isArray(permissions)) {
+    return res.status(400).json({ message: "Permissions must be an array" });
     }
 
     // Creates random token value
@@ -32,7 +36,8 @@ router.post("/generate", requireAuth, async (req, res) => {
 
     const apiToken = await ApiToken.create({
       name,
-      token
+      token,
+      permissions: permissions || []
     });
 
     return res.json({
