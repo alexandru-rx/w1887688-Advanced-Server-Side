@@ -25,6 +25,30 @@ const ProfileSchema = new mongoose.Schema({
     type: String,
     default: ""
   },
+    programme: {
+    type: String,
+    default: ""
+  },
+  graduationYear: {
+    type: Number,
+    default: null
+  },
+  industrySector: {
+    type: String,
+    default: ""
+  },
+  currentRole: {
+    type: String,
+    default: ""
+  },
+  skills: {
+    type: [String],
+    default: []
+  },
+  certifications: {
+    type: [String],
+    default: []
+  },
   createdAt: {
     type: Date,
     default: Date.now
