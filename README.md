@@ -107,17 +107,17 @@ Cardinality: User (0..*) — Email Token (1..1)
 
 | Method | Endpoint | Description |
 ------------------------------------------
-| POST | /auth/register | Register user |
-| POST | /auth/login | Login user |
-| POST | /auth/logout | Logout user |
-| POST | /profile | Create/update profile |
-| GET | /profile/me | Get current profile |
-| GET | /analytics/summary | Dashboard summary |
-| GET | /analytics/by-industry | Industry chart |
-| GET | /analytics/by-programme | Programme chart |
-| GET | /analytics/by-graduation-year | Year chart |
-| GET | /apiKeys/usage | API usage logs |
-| GET | /client/participatingAlumnus/tomorrow | Client endpoint |
+- | POST | /auth/register | Register user |
+- | POST | /auth/login | Login user |
+- | POST | /auth/logout | Logout user |
+- | POST | /profile | Create/update profile |
+- | GET | /profile/me | Get current profile |
+- | GET | /analytics/summary | Dashboard summary |
+- | GET | /analytics/by-industry | Industry chart |
+- | GET | /analytics/by-programme | Programme chart |
+- | GET | /analytics/by-graduation-year | Year chart |
+- | GET | /apiKeys/usage | API usage logs |
+- | GET | /client/participatingAlumnus/tomorrow | Client endpoint |
 
 ## 7. Security Features
 
